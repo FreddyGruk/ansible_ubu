@@ -1,0 +1,16 @@
+---
+- name: "Apache installation using Docker"
+  hosts: prod
+  become: true
+ pre_tasks:
+    - name: install python-pip
+      apt: name=python-pip state=present update_cache=yes
+    - name: Install docker python
+      pip: name=docker-py
+  tasks:
+  - name: Create Apache container
+     docker_image:
+     name: webapp
+     image: httpd
+     ports:
+        - "80:80"
